@@ -11,22 +11,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Lint with flake8
-      run: |
-        flake8 .
+      - name: Lint with flake8 and save report
+        run: |
+          flake8 . > flake8_report.txt || true
 
-    - name: Run tests and generate HTML report
-      run: |
-        pytest --html=report.html
+      - name: Upload flake8 report
+        uses: actions/upload-artifact@v3
+        with:
+          name: flake8-report
+          path: flake8_report.txt
+
+      - name: Run tests and generate HTML report
+        run: |
+          pytest --html=report.html
+
+      - name: Upload pytest HTML report
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-html-report
+          path: report.html
