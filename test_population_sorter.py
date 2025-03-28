@@ -48,3 +48,25 @@ def test_read_population_data(sample_data_file):
 def test_sort_by_area(input_data, expected_first_country):
     sorted_data = sort_by_area(input_data)
     assert sorted_data[0]['country'] == expected_first_country
+
+# Параметризований тест для сортування за населенням
+@pytest.mark.parametrize("input_data, expected_first_country", [
+    (
+        [
+            {'country': 'КраїнаA', 'area': 500, 'population': 3000},
+            {'country': 'КраїнаB', 'area': 300, 'population': 1000},
+            {'country': 'КраїнаC', 'area': 700, 'population': 2000},
+        ],
+        'КраїнаB'
+    ),
+    (
+        [
+            {'country': 'КраїнаX', 'area': 1000, 'population': 8000},
+            {'country': 'КраїнаY', 'area': 800, 'population': 6000},
+        ],
+        'КраїнаY'
+    )
+])
+def test_sort_by_population(input_data, expected_first_country):
+    sorted_data = sort_by_population(input_data)
+    assert sorted_data[0]['country'] == expected_first_country
