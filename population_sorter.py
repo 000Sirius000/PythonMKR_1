@@ -31,3 +31,23 @@ def sort_by_area(data):
 def sort_by_population(data):
     """Сортує дані за населенням (від меншої до більшої)"""
     return sorted(data, key=lambda x: x['population'])
+
+def main():
+    if len(sys.argv) < 2:
+        print("Використання: python population_sorter.py <file_path>")
+        sys.exit(1)
+    file_path = sys.argv[1]
+    data = read_population_data(file_path)
+    sorted_area = sort_by_area(data)
+    sorted_population = sort_by_population(data)
+
+    print("Сортування за площею:")
+    for item in sorted_area:
+        print(f"{item['country']}: {item['area']}")
+
+    print("\nСортування за населенням:")
+    for item in sorted_population:
+        print(f"{item['country']}: {item['population']}")
+
+if __name__ == '__main__':
+    main()
