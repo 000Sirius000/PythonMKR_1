@@ -23,3 +23,7 @@ def read_population_data(file_path):
                 except ValueError as e:
                     print(f"Помилка обробки рядка: {line}. Помилка: {e}", file=sys.stderr)
     return data
+
+def sort_by_area(data):
+    """Сортує дані за площею (від меншої до більшої)"""
+    return sorted(data, key=lambda x: x['area'])
