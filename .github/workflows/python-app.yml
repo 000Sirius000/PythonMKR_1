@@ -28,7 +28,7 @@ jobs:
           flake8 . > flake8_report.txt || true
 
       - name: Upload flake8 report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: flake8-report
           path: flake8_report.txt
@@ -38,7 +38,7 @@ jobs:
           pytest --html=report.html
 
       - name: Upload pytest HTML report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-html-report
           path: report.html
