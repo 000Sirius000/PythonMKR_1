@@ -17,3 +17,12 @@ def sample_data_file():
     yield tmp_path
     os.remove(tmp_path)
 
+# Тест зчитування даних з файлу
+def test_read_population_data(sample_data_file):
+    data = read_population_data(sample_data_file)
+    assert len(data) == 4
+    # Перевірка типів даних
+    for item in data:
+        assert isinstance(item['country'], str)
+        assert isinstance(item['area'], float)
+        assert isinstance(item['population'], int)
