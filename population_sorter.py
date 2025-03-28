@@ -1,5 +1,6 @@
 import sys
 
+
 def read_population_data(file_path):
     """
     Зчитує дані з файлу та повертає список словників.
@@ -12,7 +13,6 @@ def read_population_data(file_path):
             if line:
                 try:
                     country, area, population = [item.strip() for item in line.split(',')]
-                    # Перетворення даних на відповідні типи
                     area = float(area)
                     population = int(population)
                     data.append({
@@ -24,20 +24,28 @@ def read_population_data(file_path):
                     print(f"Помилка обробки рядка: {line}. Помилка: {e}", file=sys.stderr)
     return data
 
+
 def sort_by_area(data):
     """Сортує дані за площею (від меншої до більшої)"""
     return sorted(data, key=lambda x: x['area'])
+
 
 def sort_by_population(data):
     """Сортує дані за населенням (від меншої до більшої)"""
     return sorted(data, key=lambda x: x['population'])
 
+
 def main():
-    if len(sys.argv) < 2:
-        print("Використання: python population_sorter.py <file_path>")
+    # Якщо не передано аргументів, використати data.txt за замовчуванням
+    file_path = sys.argv[1] if len(sys.argv) > 1 else "data.txt"
+
+    try:
+        data = read_population_data(file_path)
+    except FileNotFoundError:
+        print(
+            f"Файл '{file_path}' не знайдено. Будь ласка, переконайтесь, що файл існує у кореневій директорії проєкту.")
         sys.exit(1)
-    file_path = sys.argv[1]
-    data = read_population_data(file_path)
+
     sorted_area = sort_by_area(data)
     sorted_population = sort_by_population(data)
 
@@ -48,6 +56,7 @@ def main():
     print("\nСортування за населенням:")
     for item in sorted_population:
         print(f"{item['country']}: {item['population']}")
+
 
 if __name__ == '__main__':
     main()
